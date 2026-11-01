@@ -1,0 +1,288 @@
+================================================================================
+        ONLINE EXAMINATION SYSTEM - QUICK SETUP GUIDE
+================================================================================
+
+PROJECT DETAILS:
+- Technology: Java, JSP, Servlets, MySQL
+- Server: Apache Tomcat v11
+- IDE: Eclipse
+- Database: MySQL 5.7+
+- Java Version: JDK 11+
+
+================================================================================
+STEP-BY-STEP SETUP INSTRUCTIONS
+================================================================================
+
+STEP 1: Download Required Software
+---------------------------------
+1. Java JDK 11 or higher
+   Download from: https://www.oracle.com/java/technologies/downloads/
+
+2. Apache Tomcat v11
+   Download from: https://tomcat.apache.org/download-11.cgi
+
+3. MySQL Server
+   Download from: https://www.mysql.com/downloads/
+
+4. Eclipse IDE
+   Download from: https://www.eclipse.org/downloads/
+   (Choose Eclipse IDE for Enterprise Java Developers)
+
+STEP 2: Install MySQL Database
+------------------------------
+1. Install MySQL Server
+2. Start MySQL Service
+3. Open MySQL Command Prompt or MySQL Workbench
+4. Create database by running:
+   mysql> source /path/to/database/exam_system.sql
+
+   OR copy-paste contents of exam_system.sql and execute
+
+5. Verify tables are created:
+   mysql> USE exam_system;
+   mysql> SHOW TABLES;
+
+STEP 3: Configure Eclipse with Tomcat
+--------------------------------------
+1. Open Eclipse
+2. Go to Window → Preferences → Server → Runtime Environments
+3. Click Add...
+4. Select Apache Tomcat v11.0
+5. Browse to Tomcat installation directory
+6. Click Finish
+7. Apply and Close
+
+STEP 4: Import Project into Eclipse
+------------------------------------
+1. Open Eclipse
+2. File → Import → General → Existing Projects into Workspace
+3. Select OnlineExamSystem folder
+4. Click Finish
+5. Project will be imported and indexed
+
+STEP 5: Download MySQL JDBC Driver
+-----------------------------------
+1. Download mysql-connector-java-X.X.XX.jar
+   From: https://dev.mysql.com/downloads/connector/j/
+
+2. Place the JAR file in:
+   OnlineExamSystem/WebContent/WEB-INF/lib/
+
+3. Right-click project → Build Path → Configure Build Path
+4. Add External JAR (the MySQL connector)
+
+STEP 6: Configure Database Connection
+--------------------------------------
+1. Open: src/com/exam/util/DBConnection.java
+2. Update database credentials:
+   - DB_URL: jdbc:mysql://localhost:3306/exam_system
+   - DB_USER: root (or your MySQL username)
+   - DB_PASSWORD: root (or your MySQL password)
+3. Save the file
+
+STEP 7: Add Project to Tomcat Server
+-------------------------------------
+1. Right-click OnlineExamSystem project
+2. Properties
+3. Search for "Project Facets"
+4. Click on Runtimes tab
+5. Check "Apache Tomcat v11.0"
+6. Apply and Close
+
+STEP 8: Build and Run
+---------------------
+1. Right-click project → Clean... → Clean
+2. Wait for build to complete
+3. Right-click project → Run As → Run on Server
+4. Select Apache Tomcat v11.0
+5. Click Finish
+
+STEP 9: Access Application
+---------------------------
+1. Open web browser
+2. Go to: http://localhost:8080/OnlineExamSystem/
+3. You will see the home page
+
+STEP 10: Login
+--------------
+Use these credentials:
+
+STUDENT LOGIN:
+- Username: student1
+- Password: password123
+
+ADMIN LOGIN:
+- Username: admin1
+- Password: admin123
+
+================================================================================
+DEFAULT SAMPLE DATA INCLUDED
+================================================================================
+
+EXAMS:
+1. Java Programming Exam (50 questions, 60 minutes)
+2. Web Development Exam (40 questions, 45 minutes)
+3. Database Management Exam (45 questions, 50 minutes)
+
+Each exam has 5 sample questions already added.
+Admins can add more questions using the Admin Panel.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+ERROR: "Class not found: com.mysql.cj.jdbc.Driver"
+FIX: Ensure MySQL JDBC driver JAR is in WebContent/WEB-INF/lib/
+
+ERROR: "Connection refused: Cannot connect to database"
+FIX:
+- Ensure MySQL server is running
+- Check database name, username, password in DBConnection.java
+- Verify the SQL script was executed successfully
+
+ERROR: "404 Page Not Found"
+FIX:
+- Check if Tomcat is running
+- Verify context path is correct in Application
+- Clear browser cache (Ctrl+Shift+Delete)
+
+ERROR: "Compilation errors in Eclipse"
+FIX:
+- Right-click project → Maven → Update Project
+- Or: Project → Clean... → Clean
+- Check Java compiler settings match JDK version
+
+ERROR: "Timer not working in exam"
+FIX:
+- Ensure JavaScript is enabled in browser
+- Open browser console (F12) to check for errors
+- Verify exam.js is loading correctly
+
+================================================================================
+PROJECT FOLDER STRUCTURE
+================================================================================
+
+OnlineExamSystem/
+│
+├── src/                          (Java source code)
+│   └── com/exam/
+│       ├── model/               (User.java, Question.java)
+│       ├── servlet/             (Login, Exam, Result servlets)
+│       ├── dao/                 (UserDAO, QuestionDAO)
+│       └── util/                (DBConnection.java)
+│
+├── WebContent/                   (Web resources)
+│   ├── WEB-INF/
+│   │   ├── web.xml             (Deployment descriptor)
+│   │   ├── lib/                (JAR libraries - add MySQL driver here)
+│   │   ├── classes/            (Compiled classes)
+│   │   └── META-INF/
+│   ├── JSP/                    (JSP pages - not used, in root)
+│   ├── assets/
+│   │   ├── css/               (style.css)
+│   │   └── js/                (exam.js)
+│   ├── *.jsp                  (Home, Login, Dashboard pages)
+│   └── META-INF/
+│
+├── database/
+│   └── exam_system.sql        (Database script)
+│
+├── .classpath                 (Eclipse classpath config)
+├── .project                   (Eclipse project config)
+├── .settings/                 (Eclipse settings)
+├── README.md                  (Detailed documentation)
+└── SETUP_GUIDE.txt           (This file)
+
+================================================================================
+FEATURES
+================================================================================
+
+✓ Student Login & Authentication
+✓ Multiple Choice Questions
+✓ Exam Timer with Auto-Submit
+✓ Automatic Result Calculation
+✓ Result History & Performance Tracking
+✓ Admin Panel for Question Management
+✓ Responsive Web Design
+✓ Session Management
+✓ Secure Database Access
+
+================================================================================
+CUSTOMIZE THE PROJECT
+================================================================================
+
+1. Change Exam Duration:
+   - Edit exam.js: Change EXAM_DURATION value
+   - Or update database exams table
+
+2. Add More Questions:
+   - Login as admin
+   - Use Admin Panel to add questions
+   - Or directly insert into questions table in MySQL
+
+3. Change Passing Percentage:
+   - Update exams table in database
+   - Or modify result.jsp logic
+
+4. Customize UI:
+   - Edit style.css for colors and layout
+   - Edit JSP files for content and structure
+
+5. Add User Registration:
+   - Create registration.jsp
+   - Create RegisterServlet
+   - Add to UserDAO and web.xml
+
+================================================================================
+IMPORTANT NOTES
+================================================================================
+
+⚠ This is a demonstration project for learning purposes.
+
+FOR PRODUCTION:
+- Hash passwords (use BCrypt)
+- Implement proper validation
+- Add CSRF protection
+- Use HTTPS
+- Add error handling
+- Implement logging
+- Add admin role verification
+- Sanitize all inputs
+
+================================================================================
+SUPPORT & HELP
+================================================================================
+
+1. Check README.md for detailed documentation
+2. Review code comments in Java files
+3. Check browser console (F12) for JavaScript errors
+4. Check Eclipse Console for server errors
+5. Check MySQL error logs if database issues
+
+================================================================================
+QUICK REFERENCE - IMPORTANT FILES
+================================================================================
+
+Database Config: src/com/exam/util/DBConnection.java
+Web Config:     WebContent/WEB-INF/web.xml
+Styling:        WebContent/assets/css/style.css
+Timer Logic:    WebContent/assets/js/exam.js
+Database:       database/exam_system.sql
+Home Page:      WebContent/index.jsp
+Login Page:     WebContent/login.jsp
+Student Panel:  WebContent/studentDashboard.jsp
+Exam Page:      WebContent/exam.jsp
+Results:        WebContent/result.jsp
+
+================================================================================
+VERSION INFORMATION
+================================================================================
+
+Created: 2026
+Version: 1.0
+Status: Ready to Deploy
+Last Updated: October 2026
+
+================================================================================
+END OF SETUP GUIDE
+================================================================================
